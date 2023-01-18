@@ -3,9 +3,9 @@
   src: url("../src/fonts/Bebas_Neue/FontsFree-Net-BebasNeue-Regular.ttf");
 }
 
-* {
+body {
   padding: 0;
   margin: 0;
-  background-color: black;
+  background-color: #242424;
   font-family: Bebas Neue;
 }

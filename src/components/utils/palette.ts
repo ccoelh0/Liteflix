@@ -4,6 +4,9 @@ const palette = {
   },
   turquoise: {
     default: '#64EEBC'
+  },
+  gray: {
+    default: '#242424'
   }
 }
 

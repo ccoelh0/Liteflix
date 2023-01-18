@@ -12,29 +12,33 @@ const Header = () => {
 
   const desktopMenu = (
     <Container>
-      <DivFlex gap={64}>
-        <Liteflix format='turquoise' />
+      <section>
+        <DivFlex gap={64}>
+          <Liteflix format='turquoise' />
 
-        <Text>+ AGREGAR PELICULA</Text>
-      </DivFlex>
+          <Text>+ AGREGAR PELICULA</Text>
+        </DivFlex>
 
-      <DivFlex gap={40}>
-        <BurgerMenu/>
+        <DivFlex gap={40}>
+          <BurgerMenu/>
 
-        <BellContainer>
-          <Bell/>
-        </BellContainer>
+          <BellContainer>
+            <Bell/>
+          </BellContainer>
 
-        <User/>
-      </DivFlex>
+          <User/>
+        </DivFlex>
+      </section>
     </Container>
   )
 
   const mobileMenu = (
     <Container isMobile>
-      <BurgerMenu/>
-      <Liteflix format='turquoise' />
-      <User/>
+      <section>
+        <BurgerMenu/>
+        <Liteflix format='turquoise' />
+        <User/>
+      </section>
     </Container>
   )
 
@@ -49,11 +53,16 @@ const Flex = css`
   justify-content: space-between;
 `
 
-const Container = styled.header<{isMobile?: boolean}>`
-  ${Flex};
-  padding: ${props => props.isMobile ? '1rem 1.6rem' : '35px 104px'};
-  position: sticky;
-  top: 0px;
+const Container = styled.header<{isMobile?: boolean}>` 
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: linear-gradient(0deg, rgba(36, 36, 36, 0) 0%, #0000006c 100%);
+
+  section {
+    ${Flex}
+    padding: ${props => props.isMobile ? '1rem 1.6rem' : '35px 104px'};
+  }
 `
 
 const DivFlex = styled.div<{gap: number}>`
