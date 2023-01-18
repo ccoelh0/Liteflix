@@ -1,8 +1,11 @@
-import Header from './components/header/header';
+import Container from './components/container/container'
+import Provider from './components/context/context';
 
 function App() {
   return (
-    <Header/>
+    <Provider>
+      <Container/>
+    </Provider>
   );
 }
 

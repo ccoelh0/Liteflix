@@ -16,7 +16,7 @@ const useWindowSize = (): {device: device} => {
 
   
   return {
-    device: width <= 768 ? 'mobile' : 'desktop'
+    device: width <= 1024 ? 'mobile' : 'desktop'
   }
 
 }

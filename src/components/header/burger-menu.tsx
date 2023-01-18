@@ -1,15 +1,18 @@
 import { useState } from 'react'
 import styled, { css } from 'styled-components'
+import useWindowSize from '../utils/hooks/useWindowSize'
 import palette from '../utils/palette'
 
 const BurgerMenu = () => {
   const [open, setOpen] = useState<boolean>(false)
+  const { device } = useWindowSize()
+  const isDesktop = device === 'desktop'
 
   return (
     <Container onClick={() => setOpen(prev => !prev)} isOpen={open}>
+      <Line isShort={isDesktop} />
       <Line />
-      <Line />
-      <Line isShort />
+      <Line isShort={!isDesktop} />
     </Container>
   )
 }
@@ -42,7 +45,11 @@ const Container = styled.div<{ isOpen: boolean }>`
     top: 12px;
   }
 
-  ${props => props.isOpen && Effects} 
+  ${props => props.isOpen && Effects}; 
+
+  @media (min-width: 1020px) {
+    transform: rotate(180deg);
+  }
 `
 
 const Line = styled.span <{ isShort?: boolean }>`
@@ -82,7 +89,33 @@ const Effects = css`
   }
 
   span:nth-child(3) {
-    opacity: 0;
+    opacity: 6px;
     left: -60px;
+  }
+
+  @media(min-width: 1020px) {
+    span:nth-child(1) {
+      background-color: transparent;
+      left: -60px;
+    }
+   
+    span:nth-child(2) {
+      top: 6px;
+      -webkit-transform: rotate(-135deg);
+      -moz-transform: rotate(-135deg);
+      -o-transform: rotate(-135deg);
+      transform: rotate(-135deg);
+    }
+
+    span:nth-child(3) {
+      top: 6px;
+      -webkit-transform: rotate(135deg);
+      -moz-transform: rotate(135deg);
+      -o-transform: rotate(135deg);
+      transform: rotate(135deg);
+      left: 0;
+
+    }
+
   }
 `

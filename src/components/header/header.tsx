@@ -1,11 +1,10 @@
-import React from 'react'
 import styled, {css} from 'styled-components'
 import useWindowSize from '../utils/hooks/useWindowSize';
 import Liteflix from '../utils/liteflix';
 import BurgerMenu from './burger-menu';
 import User from './user';
-import Spacer from '../utils/Spacer';
 import palette from '../utils/palette';
+import { Bell as BellIcon} from 'react-feather';
 
 const Header = () => {
   const {device} = useWindowSize()
@@ -13,10 +12,20 @@ const Header = () => {
 
   const desktopMenu = (
     <Container>
-      <DivFlex>
+      <DivFlex gap={64}>
         <Liteflix format='turquoise' />
-        <Spacer axis='horizontal' size={64}/>
-        <Text>+ AGREGAR UNA PELICULA</Text>
+
+        <Text>+ AGREGAR PELICULA</Text>
+      </DivFlex>
+
+      <DivFlex gap={40}>
+        <BurgerMenu/>
+
+        <BellContainer>
+          <Bell/>
+        </BellContainer>
+
+        <User/>
       </DivFlex>
     </Container>
   )
@@ -47,8 +56,9 @@ const Container = styled.header<{isMobile?: boolean}>`
   top: 0px;
 `
 
-const DivFlex = styled.div`
+const DivFlex = styled.div<{gap: number}>`
   ${Flex};  
+  gap: ${props => props.gap && props.gap}px;
 `
 
 const Text = styled.span`
@@ -60,4 +70,21 @@ const Text = styled.span`
   text-transform: uppercase;
   color: ${palette.white.default};
   cursor: pointer;
+`
+
+const BellContainer = styled.div`
+  cursor: pointer;
+
+  &::after{
+    content: '•';
+    color: ${palette.turquoise.default};
+    font-size: 40px;
+    position: relative;
+    top: -5px; 
+    left: -11px;
+  }
+`
+
+const Bell = styled(BellIcon)`
+  color: ${palette.white.default};
 `
