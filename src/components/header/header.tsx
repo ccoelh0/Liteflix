@@ -5,13 +5,32 @@ import BurgerMenu from './burger-menu';
 import User from './user';
 import palette from '../utils/palette';
 import { Bell as BellIcon} from 'react-feather';
+import { useState, useEffect } from 'react';
 
 const Header = () => {
+
   const {device} = useWindowSize()
   const isMobile = device === 'mobile'
 
+  const [scrollPosition, setScrollPosition] = useState<number>(0)
+
+  useEffect(() => {
+    const updatePosition = () => {
+      setScrollPosition(window.pageYOffset)
+    }
+
+    window.addEventListener('scroll', updatePosition)
+
+    updatePosition()
+
+    return () => window.removeEventListener('scroll', updatePosition)
+  }, [])
+
+  const scroll = scrollPosition > 65
+
+
   const desktopMenu = (
-    <Container>
+    <Container isScrolled={scroll}>
       <section>
         <DivFlex gap={64}>
           <Liteflix format='turquoise' />
@@ -33,7 +52,7 @@ const Header = () => {
   )
 
   const mobileMenu = (
-    <Container isMobile>
+    <Container isMobile isScrolled={scroll}>
       <section>
         <BurgerMenu/>
         <Liteflix format='turquoise' />
@@ -53,11 +72,34 @@ const Flex = css`
   justify-content: space-between;
 `
 
-const Container = styled.header<{isMobile?: boolean}>` 
+const ScrollStyles = css`
+  @keyframes change-color {
+  0% {
+    background: #2424241c;    
+  }
+  25% {
+    background: #24242452;    
+  }
+  50% {
+    background: #2424248d;      
+  }
+  75% {
+    background: #242424c1;      
+  }
+  100% {
+    background: #242424d6;       
+  }
+}
+  background: ${palette.gray.default};
+  animation: change-color 0.2s;
+`
+
+const Container = styled.header<{isMobile?: boolean, isScrolled: boolean}>` 
   position: fixed;
   top: 0;
   width: 100%;
-  background: linear-gradient(0deg, rgba(36, 36, 36, 0) 0%, #0000006c 100%);
+
+  ${props => !props.isScrolled ? 'background: linear-gradient(0deg, rgba(36, 36, 36, 0) 0%, #0000006c 100%);': ScrollStyles}
 
   section {
     ${Flex}

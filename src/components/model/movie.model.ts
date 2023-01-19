@@ -15,4 +15,8 @@ interface IMovie {
     vote_count?: number
 }
 
-export type { IMovie }
+interface IMovieWithImage extends IMovie {
+    image?: string
+  }
+
+export type { IMovie, IMovieWithImage }

@@ -3,6 +3,11 @@
   src: url("../src/fonts/Bebas_Neue/FontsFree-Net-BebasNeue-Regular.ttf");
 }
 
+@font-face {
+  font-family: 'Bebas Neue Light';
+  src: url('../src/fonts/Bebas_Neue/BebasNeue\ Light.ttf');
+}
+
 body {
   padding: 0;
   margin: 0;

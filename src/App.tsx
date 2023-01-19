@@ -1,11 +1,11 @@
 import Container from './components/container/container'
-import Provider from './components/context/context';
+// import Provider from './components/context/context';
 
 function App() {
   return (
-    <Provider>
+    // <Provider>
       <Container/>
-    </Provider>
+    // </Provider>
   );
 }
 

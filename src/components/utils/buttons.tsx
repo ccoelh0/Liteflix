@@ -33,7 +33,7 @@ const Button = styled.button<{listOrPlay: 'list' | 'play'}>`
   height: 56px;
   background-color: ${palette.gray.default};
   color: ${palette.white.default};
-  border: ${props => props.listOrPlay === 'list' ? ' 1px solid white' : '0px'};
+  border: ${props => props.listOrPlay === 'list' ? ' 0.5px solid white' : '0px'};
 
   div {
     display: flex;
