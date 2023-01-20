@@ -1,10 +1,14 @@
-import { useState } from 'react'
+import { SetStateAction } from 'react'
 import styled, { css } from 'styled-components'
 import useWindowSize from '../utils/hooks/useWindowSize'
 import palette from '../utils/palette'
 
-const BurgerMenu = () => {
-  const [open, setOpen] = useState<boolean>(false)
+interface IBugerMenu {
+  open: boolean;
+  setOpen: React.Dispatch<SetStateAction<boolean>>
+}
+
+const BurgerMenu = ({ open, setOpen }: IBugerMenu) => {
   const { device } = useWindowSize()
   const isDesktop = device === 'desktop'
 

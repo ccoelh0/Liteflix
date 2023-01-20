@@ -43,7 +43,6 @@ const Dropdown = () => {
 export default Dropdown
 
 const Container = styled.div`
-  position: relative;
   min-width: 310px;
   width: 370px;
 `

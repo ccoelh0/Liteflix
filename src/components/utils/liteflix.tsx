@@ -25,6 +25,7 @@ const White = styled.h2<{device: 'mobile' | 'desktop'}>`
   letter-spacing: 4px;
   text-align: left;
   font-weight: 100;
+  margin: 0;
 `
 
 const Turquoise = styled.h2<{device: 'mobile' | 'desktop'}>`
@@ -35,6 +36,7 @@ const Turquoise = styled.h2<{device: 'mobile' | 'desktop'}>`
   letter-spacing: 4px;
   text-align: center;
   font-weight: 100;
+  margin: 0;
 
   b {
     font-family: 'Bebas Neue';

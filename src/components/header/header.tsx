@@ -1,18 +1,23 @@
-import styled, {css} from 'styled-components'
+import { useState, useEffect } from 'react';
+import styled, { css } from 'styled-components'
 import useWindowSize from '../utils/hooks/useWindowSize';
 import Liteflix from '../utils/liteflix';
 import BurgerMenu from './burger-menu';
 import User from './user';
 import palette from '../utils/palette';
-import { Bell as BellIcon} from 'react-feather';
-import { useState, useEffect } from 'react';
+import { Bell as BellIcon } from 'react-feather';
+import Menu from './menu';
 
 const Header = () => {
-
-  const {device} = useWindowSize()
-  const isMobile = device === 'mobile'
-
+  const [open, setOpen] = useState<boolean>(false)
   const [scrollPosition, setScrollPosition] = useState<number>(0)
+
+  console.log(scrollPosition)
+
+  const { device } = useWindowSize()
+
+  const isMobile = device === 'mobile'
+  const scroll = scrollPosition > 100
 
   useEffect(() => {
     const updatePosition = () => {
@@ -26,42 +31,46 @@ const Header = () => {
     return () => window.removeEventListener('scroll', updatePosition)
   }, [])
 
-  const scroll = scrollPosition > 65
 
+  return (
+    <>
+      <Container isMobile isOpen={open} scrollPosition={scrollPosition}>
+        <section>
+          {isMobile ? (
+            <>
+              <BurgerMenu open={open} setOpen={setOpen} />
+              <Liteflix format='turquoise' />
+              <User />
+            </>
+          ) : (
+            <>
+              {!open &&
+                <DivFlex gap={64}>
+                  <Liteflix format='turquoise' />
 
-  const desktopMenu = (
-    <Container isScrolled={scroll}>
-      <section>
-        <DivFlex gap={64}>
-          <Liteflix format='turquoise' />
+                  <Text>+ AGREGAR PELICULA</Text>
+                </DivFlex>
+              }
 
-          <Text>+ AGREGAR PELICULA</Text>
-        </DivFlex>
+              <DivFlex gap={40} isOpen={open}>
+                <BurgerMenu open={open} setOpen={setOpen} />
 
-        <DivFlex gap={40}>
-          <BurgerMenu/>
+                <DivFlex gap={20}>
+                  <BellContainer>
+                    <Bell />
+                  </BellContainer>
 
-          <BellContainer>
-            <Bell/>
-          </BellContainer>
+                  <User />
+                </DivFlex>
+              </DivFlex>
+            </>
+          )}
+        </section>
 
-          <User/>
-        </DivFlex>
-      </section>
-    </Container>
+        {open && <Menu />}
+      </Container>
+    </>
   )
-
-  const mobileMenu = (
-    <Container isMobile isScrolled={scroll}>
-      <section>
-        <BurgerMenu/>
-        <Liteflix format='turquoise' />
-        <User/>
-      </section>
-    </Container>
-  )
-
-  return isMobile ? mobileMenu : desktopMenu
 }
 
 export default Header;
@@ -72,34 +81,26 @@ const Flex = css`
   justify-content: space-between;
 `
 
-const ScrollStyles = css`
-  @keyframes change-color {
-  0% {
-    background: #2424241c;    
-  }
-  25% {
-    background: #24242452;    
-  }
-  50% {
-    background: #2424248d;      
-  }
-  75% {
-    background: #242424c1;      
-  }
-  100% {
-    background: #242424d6;       
-  }
+const ScrollStyles = (scroll: number) => {
+  if (scroll >= 0 && scroll < 50) return 'transparent'
+  if (scroll >= 50 && scroll < 100) return '#2424241c'
+  if (scroll >= 100 && scroll < 150) return '#24242452'
+  if (scroll >= 150 && scroll < 200) return '#2424248d'
+  if (scroll >= 200 && scroll < 250) return '#242424c1'
+  if (scroll >= 250 && scroll < 300) return '#242424d6'
+  return palette.gray.default
 }
-  background: ${palette.gray.default};
-  animation: change-color 0.2s;
-`
 
-const Container = styled.header<{isMobile?: boolean, isScrolled: boolean}>` 
+
+const Container = styled.header<{ isMobile?: boolean, isOpen: boolean, scrollPosition: number }>` 
   position: fixed;
   top: 0;
   width: 100%;
 
-  ${props => !props.isScrolled ? 'background: linear-gradient(0deg, rgba(36, 36, 36, 0) 0%, #0000006c 100%);': ScrollStyles}
+  background: ${props => {
+    if (props.isOpen) return palette.gray.default
+    return ScrollStyles(props.scrollPosition);
+  }};
 
   section {
     ${Flex}
@@ -107,9 +108,10 @@ const Container = styled.header<{isMobile?: boolean, isScrolled: boolean}>`
   }
 `
 
-const DivFlex = styled.div<{gap: number}>`
+const DivFlex = styled.div<{ gap: number, isOpen?: boolean }>`
   ${Flex};  
   gap: ${props => props.gap && props.gap}px;
+  ${props => props.isOpen && 'width: 100%;'}
 `
 
 const Text = styled.span`
