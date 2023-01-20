@@ -12,30 +12,41 @@ const Dropdown = () => {
   const popular = select === 'POPULARES'
   const myMovies = select === 'MIS PELICULAS' 
 
+  const handleSelect = (option: option) => {
+    setSelect(option)
+    return setOpen(prev => !prev)
+  }
+
   return (
-    <div>
+    <Container>
       <Visible onClick={() => setOpen(prev => !prev)}>
         <p>VER: <span>{select}</span> <ChevronDown /></p>
       </Visible>
 
       {open && (
         <Drop>
-          <DropText isSelected={popular} onClick={() => setSelect('POPULARES')}>
+          <DropText isSelected={popular} onClick={() => handleSelect('POPULARES')}>
             <span>POPULARES</span>
             {popular && <CheckIcon/>}
           </DropText>
 
-          <DropText isSelected={myMovies} onClick={() => setSelect('MIS PELICULAS')}>
+          <DropText isSelected={myMovies} onClick={() => handleSelect('MIS PELICULAS')}>
             <span>MIS PELICULAS</span>
             {myMovies && <CheckIcon/>}
           </DropText>
         </Drop>
       )}
-    </div>
+    </Container>
   )
 }
 
 export default Dropdown
+
+const Container = styled.div`
+  position: relative;
+  min-width: 310px;
+  width: 370px;
+`
 
 const Visible = styled.div`
   font-family: 'Bebas Neue Light';
@@ -45,7 +56,6 @@ const Visible = styled.div`
   letter-spacing: 4px;
   text-align: center;
   color: ${palette.white.default};
-  position: relative;
 
   p {
     display: flex;
@@ -64,13 +74,12 @@ const Drop = styled.div`
   width: 370px;
   height: 112px;
   background-color: ${palette.gray.default};
-  position: absolute;
-  left: -105px;
   border: 1px solid #ffffff71;
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 1rem;
+  position: absolute;
 `
 
 const DropText = styled.div<{ isSelected: boolean }>`
@@ -86,6 +95,8 @@ const DropText = styled.div<{ isSelected: boolean }>`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  cursor: pointer;
 `
 
 const CheckIcon = styled(Check)`
