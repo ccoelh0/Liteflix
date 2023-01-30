@@ -17,7 +17,6 @@ const Header = () => {
   const { device } = useWindowSize()
 
   const isMobile = device === 'mobile'
-  const scroll = scrollPosition > 100
 
   useEffect(() => {
     const updatePosition = () => {
